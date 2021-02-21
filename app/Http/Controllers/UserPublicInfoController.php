@@ -11,15 +11,20 @@ use Illuminate\Support\Facades\Validator;
 
 class UserPublicInfoController extends Controller
 {
-    //
+    private const DEFAULT_IMAGE_PATH = 'public\avatars\default-avatar-image.png';
+    /**
+     * Stores a new UserPublicInfo with given user_id and uploads its image if provided
+     *
+     * @return \App\Models\User
+     */
     public function store(Request $request, Upload $uploadService)
     {
         $validator = Validator::make($request->all(), [
             'user_id' => 'required|integer|min:1',
-            'image' => 'required|image|mimes:jpg,png,jpeg,gif,svg|max:4096',
+            'image' => 'image|mimes:jpg,png,jpeg,gif,svg|max:4096',
             'name' => 'required|string|max:255|min:1',
             'username' => 'required|string|max:255|min:1',
-            'bio' => 'nullable|string|max:5000',
+            'bio' => 'string|max:5000',
         ]);
 
         if ($validator->fails()) {
@@ -31,8 +36,11 @@ class UserPublicInfoController extends Controller
         $name =  $request->name;
         $bio = $request->bio;
         $userId = $request->user_id;
-
-        $path = $uploadService->uploadImage($file, "public\avatars\\", $username);
+        
+        $path = self::DEFAULT_IMAGE_PATH;
+        if ($file) {
+            $path = $uploadService->uploadImage($file, "public\avatars\\", $username);
+        }
         
         $user = User::find($userId);
         $user->userPubInf()->create(['username' => $username, 'name' => $name, 'bio' => $bio]);
