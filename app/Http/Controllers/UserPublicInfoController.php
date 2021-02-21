@@ -11,7 +11,6 @@ use Illuminate\Support\Facades\Validator;
 
 class UserPublicInfoController extends Controller
 {
-    private const DEFAULT_IMAGE_PATH = 'public\avatars\default-avatar-image.png';
     /**
      * Stores a new UserPublicInfo with given user_id and uploads its image if provided
      *
@@ -36,7 +35,7 @@ class UserPublicInfoController extends Controller
         $name =  $request->name;
         $bio = $request->bio;
         $userId = $request->user_id;
-        $path = self::DEFAULT_IMAGE_PATH;
+        $path = Upload::DEFAULT_IMAGE_PATH;
 
         $user = User::find($userId);
         $user->userPubInf()->create(['username' => $username, 'name' => $name, 'bio' => $bio]);
@@ -44,6 +43,7 @@ class UserPublicInfoController extends Controller
         if ($file) {
             $path = $uploadService->uploadImage($file, "avatars", $username);
         }
+       
         $user->userPubInf->image()->create(['path' => $path]);
 
         return $user;
