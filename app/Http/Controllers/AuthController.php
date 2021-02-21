@@ -8,7 +8,6 @@ use Illuminate\Support\Facades\Validator;
 use Tymon\JWTAuth\Exceptions\JWTException;
 use Tymon\JWTAuth\Facades\JWTAuth;
 
-
 class AuthController extends Controller
 {
     /**
@@ -38,16 +37,14 @@ class AuthController extends Controller
             ]);
         if ($validator->fails()) {
             return response()->json(['errors'=>$validator->messages()]);
-        }
-        else{
+        } else {
             $user = User::create($credentials);
+
 
             $token = JWTAuth::fromUser($user);
 
             return $this->respondWithToken($token);
         }
-
-
     }
 
     /**
@@ -110,14 +107,13 @@ class AuthController extends Controller
      */
     public function deleteUser($id)
     {
-       $user =  User::find($id);
-       if($user && auth('api')->user()->id == $user->id) {
-           $user->delete();
-          return response()->json(['message' => 'we really fell sad to see you go!']);
-       }
-       else{
-           return response()->json(['error' => 'a user can only delete him/her self!']);
-       }
+        $user =  User::find($id);
+        if ($user && auth('api')->user()->id == $user->id) {
+            $user->delete();
+            return response()->json(['message' => 'we really fell sad to see you go!']);
+        } else {
+            return response()->json(['error' => 'a user can only delete him/her self!']);
+        }
     }
 
     /**
@@ -135,6 +131,4 @@ class AuthController extends Controller
             'expires_in' => auth('api')->factory()->getTTL() * 60
         ]);
     }
-
-
 }

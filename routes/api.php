@@ -1,8 +1,11 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\ImageController;
+use App\Http\Controllers\UserPublicInfoController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Models\Image;
 
 /*
 |--------------------------------------------------------------------------
@@ -22,12 +25,16 @@ use Illuminate\Support\Facades\Route;
 Route::group([
     'prefix' => 'auth'
 ], function ($router) {
-
     Route::post('register', [AuthController::class,'register']);
     Route::post('login', [AuthController::class,'login']);
     Route::post('logout', [AuthController::class,'logout']);
     Route::post('refresh', [AuthController::class,'refresh']);
     Route::delete('delete/{id}', [AuthController::class,'deleteUser']);
     Route::post('me', [AuthController::class,'me']);
+});
 
+Route::group([
+'middleware' => 'api'
+], function () {
+    Route::post('users', [UserPublicInfoController::class, 'store'])->name('users.store');
 });
