@@ -113,6 +113,7 @@ class AuthController extends Controller
        $user =  User::find($id);
        if($user && auth('api')->user()->id == $user->id) {
            $user->delete();
+           //TODO() delete images asociated  with the user from storage
           return response()->json(['message' => 'we really fell sad to see you go!']);
        }
        else{
