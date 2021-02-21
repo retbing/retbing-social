@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Http\Controllers\UserPublicInfoController;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -41,7 +42,8 @@ class User extends Authenticatable implements JWTSubject
         'email_verified_at' => 'datetime',
     ];
 
-    public  function  setPasswordAttribute($pass){
+    public function setPasswordAttribute($pass)
+    {
         $this->attributes['password'] = bcrypt($pass);
     }
 
@@ -58,5 +60,10 @@ class User extends Authenticatable implements JWTSubject
     public function getJWTCustomClaims()
     {
         return [];
+    }
+
+    public function userPubInf()
+    {
+        return $this->hasOne(UserPublicInfo::class, 'user_id');
     }
 }

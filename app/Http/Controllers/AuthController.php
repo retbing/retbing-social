@@ -7,7 +7,6 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 
-
 class AuthController extends Controller
 {
     /**
@@ -35,8 +34,7 @@ class AuthController extends Controller
             ]);
         if ($validator->fails()) {
             return response()->json(['errors'=>$validator->messages()]);
-        }
-        else{
+        } else {
             User::create($credentials);
 
             $token = auth('api')->attempt($credentials);
@@ -47,8 +45,6 @@ class AuthController extends Controller
 
             return $this->respondWithToken($token);
         }
-
-
     }
 
     /**
@@ -114,6 +110,4 @@ class AuthController extends Controller
             'expires_in' => auth('api')->factory()->getTTL() * 60
         ]);
     }
-
-
 }
