@@ -36,14 +36,14 @@ class UserPublicInfoController extends Controller
         $name =  $request->name;
         $bio = $request->bio;
         $userId = $request->user_id;
-        
         $path = self::DEFAULT_IMAGE_PATH;
-        if ($file) {
-            $path = $uploadService->uploadImage($file, "public\avatars\\", $username);
-        }
-        
+
         $user = User::find($userId);
         $user->userPubInf()->create(['username' => $username, 'name' => $name, 'bio' => $bio]);
+        
+        if ($file) {
+            $path = $uploadService->uploadImage($file, "avatars", $username);
+        }
         $user->userPubInf->image()->create(['path' => $path]);
 
         return $user;

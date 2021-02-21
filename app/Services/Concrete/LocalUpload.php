@@ -9,12 +9,8 @@ class LocalUpload extends Upload
 {
     public function uploadImage(UploadedFile $imageFile, String $directory, String $name)
     {
-        $path =   $directory.
-        $this->createUniqueName($name).
-        ".".
-        $imageFile->extension();
-        $imageFile->store('avatars');
-        return $path;
+        // $uniqueName =  $this->createUniqueName($name);
+        return  $imageFile->store('avatars');
     }
 
     public function deleteImage()
