@@ -4,8 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use Tymon\JWTAuth\Exceptions\JWTException;
 use Tymon\JWTAuth\Facades\JWTAuth;
 
 
@@ -18,6 +18,8 @@ class AuthController extends Controller
      */
     public function __construct()
     {
+        /* protect functions except login and register using middleware 'jwt.verify' */
+
         $this->middleware('jwt.verify', ['except' => ['login','register']]);
     }
 
@@ -86,7 +88,7 @@ class AuthController extends Controller
      */
     public function logout()
     {
-        auth()->logout();
+        auth('api')->logout();
 
         return response()->json(['message' => 'Successfully logged out']);
     }
@@ -99,6 +101,23 @@ class AuthController extends Controller
     public function refresh()
     {
         return $this->respondWithToken(auth('api')->refresh());
+    }
+
+    /**
+     * Refresh a token.
+     *
+     * @return String Message
+     */
+    public function deleteUser($id)
+    {
+       $user =  User::find($id);
+       if($user && auth('api')->user()->id == $user->id) {
+           $user->delete();
+          return response()->json(['message' => 'we really fell sad to see you go!']);
+       }
+       else{
+           return response()->json(['error' => 'a user can only delete him/her self!']);
+       }
     }
 
     /**

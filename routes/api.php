@@ -27,7 +27,7 @@ Route::group([
     Route::post('login', [AuthController::class,'login']);
     Route::post('logout', [AuthController::class,'logout']);
     Route::post('refresh', [AuthController::class,'refresh']);
-    Route::post('delete/{id}', [AuthController::class,'deleteUser']);
+    Route::delete('delete/{id}', [AuthController::class,'deleteUser']);
     Route::post('me', [AuthController::class,'me']);
 
 });

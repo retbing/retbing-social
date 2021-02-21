@@ -22,7 +22,7 @@ class JwtMiddleware extends BaseMiddleware
 
             $user = JWTAuth::parseToken()->authenticate();
 
-            if( !$user ) throw new Exception('User Not Found');
+            if( !$user ) throw new \Exception('User Not Found');
 
         } catch (\Exception $e) {
 
