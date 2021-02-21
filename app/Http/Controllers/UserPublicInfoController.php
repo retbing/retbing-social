@@ -2,12 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Image;
-use App\Models\UserPublicInfo;
 use App\Models\User;
 use App\Services\Upload;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Database\QueryException;
 
 class UserPublicInfoController extends Controller
 {
@@ -37,15 +36,22 @@ class UserPublicInfoController extends Controller
         $userId = $request->user_id;
         $path = Upload::DEFAULT_IMAGE_PATH;
 
-        $user = User::find($userId);
-        $user->userPubInf()->create(['username' => $username, 'name' => $name, 'bio' => $bio]);
-        
-        if ($file) {
-            $path = $uploadService->uploadImage($file, "avatars", $username);
+        try {
+            $user = User::find($userId);
+            $user->userPubInf()->create(['username' => $username, 'name' => $name, 'bio' => $bio]);
+            
+            if ($file) {
+                $path = $uploadService->uploadImage($file, "avatars", $username);
+            }
+            
+            $user->userPubInf->image()->create(['path' => $path]);
+            
+            return $user;
+        } catch (QueryException $e) {
+            return response()->json([
+                'error' => $e->getMessage(),
+                'code' => $e->getCode()
+              ], 500);
         }
-       
-        $user->userPubInf->image()->create(['path' => $path]);
-
-        return $user;
     }
 }
