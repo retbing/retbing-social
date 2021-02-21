@@ -4,6 +4,9 @@ namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
 
+use App\Services\Concrete\LocalUpload;
+use App\Services\Upload;
+
 class AppServiceProvider extends ServiceProvider
 {
     /**
@@ -13,7 +16,9 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        //
+        $this->app->singleton(Upload::class, function ($app) {
+            return new LocalUpload();
+        });
     }
 
     /**
