@@ -137,19 +137,21 @@ Distributed under the MIT License. See `LICENSE` for more information.
 <tr>
 <td>
 <a href='https://github.com/rtanyildizi' target="_blank">
-<div float="left" align=center style='padding: 10px; width: 200px; border: 1px solid white; background-color: #282A36; border-radius: 10px'>
-<img src="https://github.com/rtanyildizi.png" style="border-radius:50%" width=150px />
+<div float="left" align="center">
+<img src="https://github.com/rtanyildizi.png" width=150px />
 
-<h4 style='color: white; font-weight: bold'> Nurettin Resul Tanyıldızı </h4>
+<h4 > Nurettin Resul Tanyıldızı </h4>
 <p><a href='https://linkedin.com/in/rtanyildizi'>Linkedin</a> - <a href='mailto:tanyildizi.resul@gmail.com'>Gmail</a></p>
 </div></a>
 </td>
 <td>
+</td>
+<td>
 <a href='https://github.com/Benjamin274' target="_blank">
-<div float="left" align=center style='padding: 10px; width: 200px; border: 1px solid white; background-color: #282A36; border-radius: 10px'>
-<img src="https://media-exp1.licdn.com/dms/image/C4D03AQFQxvjnK7iDZA/profile-displayphoto-shrink_400_400/0/1598643535724?e=1619654400&v=beta&t=saz9CnZ6WhM9xhtJTRUk8xjsefUFdB3rSGR1qPod4NY" style="border-radius:50%" width=150px />
+<div float="left" align="center">
+<img src="https://media-exp1.licdn.com/dms/image/C4D03AQFQxvjnK7iDZA/profile-displayphoto-shrink_400_400/0/1598643535724?e=1619654400&v=beta&t=saz9CnZ6WhM9xhtJTRUk8xjsefUFdB3rSGR1qPod4NY" width=150px />
 
-<h4 style='color: white; font-weight: bold'>  BINIYAM A. GEINORE  </h4>
+<h4>  BINIYAM A. GEINORE  </h4>
 <p><a href='https://www.linkedin.com/in/biniyam-a-geinore-629975133/'>Linkedin</a> - <a href='mailto:biniabera274@gmail.com
 '>Gmail</a></p>
 </div></a>
