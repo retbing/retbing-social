@@ -55,6 +55,8 @@ You need to have following technologies on your machine before you run the proje
 2. Install required packages
 
     ```sh
+    cd ./retbing-social/
+     
     composer install && npm install
     ```
 
