@@ -55,13 +55,22 @@ You need to have following technologies on your machine before you run the proje
 2. Install required packages
 
     ```sh
-    composer install
-    npm install
+    composer install & npm install
     ```
 
-3. Edit .env file
+3. Make your own .env file from .env.example
 
-4. Create your jwt secret
+    ```sh
+    cp ./.env.example ./.env
+    ```
+
+4. Generate your app key
+
+    ```sh
+    php artisan key:generate
+    ```
+
+5. Create your jwt secret
 
     ```sh
     php artisan vendor:publish --provider="Tymon\JWTAuth\Providers\LaravelServiceProvider"
@@ -71,23 +80,28 @@ You need to have following technologies on your machine before you run the proje
     php artisan jwt:secret
     ```
 
-5. Migrate database tables
+6. Create database file and migrate database tables
 
     ```sh
-    php artisan migrate
+    touch ./database/database.sqlite & php artisan migrate
     ```
 
 ## Usage
 
 1. Run application
+
     ```sh
     php artisan serve
     ```
+
 2. If you want to make changes on frontend you need to run following command
+
     ```sh
-     npm run dev
+    npm run dev
     ```
+
     or
+
     ```sh
     npm run watch
     ```
@@ -159,3 +173,7 @@ Distributed under the MIT License. See `LICENSE` for more information.
 [linkedin-shield]: https://img.shields.io/badge/LinkedIn-%230072B1?logo=linkedin
 [linkedin-url-1]: https://linkedin.com/in/rtanyildizi
 [linkedin-url-2]: https://linkedin.com/in/biniyam-a-geinore-629975133/
+
+```
+
+```
