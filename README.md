@@ -3,14 +3,15 @@
 [![Contributors][contributors-shield]][contributors-url]
 [![Repo size][repo-size-shield]][repo-url]
 [![MIT License][license-shield]][license-url]
-[![LinkedIn][linkedin-shield]][linkedin-url-1]
-[![LinkedIn][linkedin-shield]][linkedin-url-2]
+
+<!-- [![LinkedIn][linkedin-shield]][linkedin-url-1]
+[![LinkedIn][linkedin-shield]][linkedin-url-2] -->
 
 # Don't Forget
 
 <!-- Project Logo -->
 <p align=center>
-<img src="./assets/images/logo.svg" width=256/>
+<img src="./assets/images/logo.png" width=256/>
 <h3 align=center>Retbing Social</h3>
 <p align=center>A simple social app created with Laravel and Vuejs<p/>
 </p>
@@ -49,14 +50,15 @@ You need to have following technologies on your machine before you run the proje
 ### Installation
 
 1. Clone the repo
+
     ```sh
     git clone https://github.com/retbing/retbing-social
     ```
+
 2. Install required packages
 
     ```sh
     cd ./retbing-social/
-     
     composer install && npm install
     ```
 
@@ -175,7 +177,3 @@ Distributed under the MIT License. See `LICENSE` for more information.
 [linkedin-shield]: https://img.shields.io/badge/LinkedIn-%230072B1?logo=linkedin
 [linkedin-url-1]: https://linkedin.com/in/rtanyildizi
 [linkedin-url-2]: https://linkedin.com/in/biniyam-a-geinore-629975133/
-
-```
-
-```
