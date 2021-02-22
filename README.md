@@ -55,7 +55,7 @@ You need to have following technologies on your machine before you run the proje
 2. Install required packages
 
     ```sh
-    composer install & npm install
+    composer install && npm install
     ```
 
 3. Make your own .env file from .env.example
