@@ -110,8 +110,6 @@ You need to have following technologies on your machine before you run the proje
     npm run watch
     ```
 
-<!-- _For more examples, please refer to the [Documentation](https://example.com)_ -->
-
 ## Roadmap
 
 See the [open issues][issues-url] for a list of proposed features (and known issues).
