@@ -10,6 +10,11 @@ use Illuminate\Database\QueryException;
 
 class UserPublicInfoController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('jwt.verify');
+    }
+
     /**
      * Stores a new UserPublicInfo with given user_id and uploads its image if provided
      *

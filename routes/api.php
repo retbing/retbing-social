@@ -1,11 +1,8 @@
 <?php
 
 use App\Http\Controllers\AuthController;
-use App\Http\Controllers\ImageController;
 use App\Http\Controllers\UserPublicInfoController;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Models\Image;
 
 /*
 |--------------------------------------------------------------------------
@@ -33,8 +30,5 @@ Route::group([
     Route::post('me', [AuthController::class,'me']);
 });
 
-Route::group([
-'middleware' => 'api'
-], function () {
-    Route::post('users', [UserPublicInfoController::class, 'store'])->name('users.store');
-});
+
+Route::post('users', [UserPublicInfoController::class, 'store'])->name('users.store');

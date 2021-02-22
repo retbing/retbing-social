@@ -101,7 +101,7 @@ class AuthController extends Controller
     }
 
     /**
-     * Refresh a token.
+     * Delete a user
      *
      * @return String Message
      */
