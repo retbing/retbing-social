@@ -10,7 +10,7 @@
 
 <!-- Project Logo -->
 <p align=center>
-<img src="./assets/images/logo.png" width=256/>
+<img src="./assets/images/logo.svg" width=256/>
 <h3 align=center>Retbing Social</h3>
 <p align=center>A simple social app created with Laravel and Vuejs<p/>
 </p>
