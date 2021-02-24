@@ -31,4 +31,10 @@ Route::group([
 });
 
 
-Route::post('users', [UserPublicInfoController::class, 'store'])->name('users.store');
+Route::prefix('users')->group(function () {
+    Route::post('/', [UserPublicInfoController::class, 'store'])->name('users.store');
+    Route::get('/', [UserPublicInfoController::class, 'index'])->name('users.index');
+    Route::get('/{user_id}', [UserPublicInfoController::class, 'show'])->name('users.show');
+    Route::get('/{user_id}/follow', [UserPublicInfoController::class, 'follow'])->name('users.follow');
+    Route::get('/{user_id}/unfollow', [UserPublicInfoController::class, 'unfollow'])->name('users.unfollow');
+});

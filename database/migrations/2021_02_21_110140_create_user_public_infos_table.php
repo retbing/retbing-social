@@ -14,6 +14,7 @@ class CreateUserPublicInfosTable extends Migration
     public function up()
     {
         Schema::create('user_public_infos', function (Blueprint $table) {
+            $table->id();
             $table->unsignedBigInteger('user_id')->unique();
             $table->string('username')->unique();
             $table->string('name');
