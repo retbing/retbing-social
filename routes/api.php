@@ -19,15 +19,15 @@ use Illuminate\Support\Facades\Route;
 //    return $request->user();
 //});
 
-Route::group([
+Route::group(['middleware' => 'throttle',
     'prefix' => 'auth'
 ], function ($router) {
     Route::post('register', [AuthController::class,'register']);
     Route::post('login', [AuthController::class,'login']);
     Route::post('logout', [AuthController::class,'logout']);
     Route::post('refresh', [AuthController::class,'refresh']);
-    Route::delete('delete/{id}', [AuthController::class,'deleteUser']);
-    Route::post('me', [AuthController::class,'me']);
+    Route::delete('{id}', [AuthController::class, 'deleteUser']);
+    Route::get('me', [AuthController::class, 'me']);
 });
 
 
