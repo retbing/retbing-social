@@ -7,14 +7,15 @@ use \Illuminate\Http\UploadedFile;
 
 class LocalUpload extends Upload
 {
-    public function uploadImage(UploadedFile $imageFile, String $directory, String $name)
+    public function uploadImage($imageFile, String $directory, String $name)
     {
-        // $uniqueName =  $this->createUniqueName($name);
-        $path = $imageFile->store('avatars');
-        return $path == false ? self::DEFAULT_IMAGE_PATH : $path;
+        $uniqueName =  $this->createUniqueName($name) . "." . $imageFile->getClientOriginalExtension();
+        $path = $imageFile->storeAs($directory, $uniqueName);
+        return $path == false ? self::DEFAULT_AVATAR_PATH : $path;
     }
 
-    public function deleteImage()
+    public function deleteImage($path)
     {
+        return unlink(storage_path('app/' . $path));
     }
 }

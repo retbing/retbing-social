@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\PostController;
 use App\Http\Controllers\UserPublicInfoController;
 use Illuminate\Support\Facades\Route;
 
@@ -19,9 +20,8 @@ use Illuminate\Support\Facades\Route;
 //    return $request->user();
 //});
 
-Route::group(['middleware' => 'throttle',
-    'prefix' => 'auth'
-], function ($router) {
+Route::prefix('auth')->group(
+    function () {
     Route::post('register', [AuthController::class,'register']);
     Route::post('login', [AuthController::class,'login']);
     Route::post('logout', [AuthController::class,'logout']);
@@ -37,4 +37,10 @@ Route::prefix('users')->group(function () {
     Route::get('/{user_id}', [UserPublicInfoController::class, 'show'])->name('users.show');
     Route::post('/{user_id}/follow', [UserPublicInfoController::class, 'follow'])->name('users.follow');
     Route::delete('/{user_id}/unfollow', [UserPublicInfoController::class, 'unfollow'])->name('users.unfollow');
+});
+
+Route::prefix('posts')->group(function () {
+    Route::get('/', [PostController::class, 'index']);
+    Route::post('/', [PostController::class, 'store']);
+    Route::delete('/{id}', [PostController::class, 'destroy']);
 });

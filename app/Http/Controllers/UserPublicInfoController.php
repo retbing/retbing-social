@@ -15,8 +15,8 @@ class UserPublicInfoController extends Controller
     public function __construct()
     {
         if (env('APP_ENV') == 'local') {
-        } else {
             $this->middleware('jwt.verify');
+        } else {
         }
     }
 
@@ -27,8 +27,8 @@ class UserPublicInfoController extends Controller
         try {
             $user = User::find($request->user_id);
             $user->user_public_info()->create(['username' => $request->username, 'name' => $request->name, 'bio' => $request->bio]);
-            
-            $path = Upload::DEFAULT_IMAGE_PATH;
+
+            $path = Upload::DEFAULT_AVATAR_PATH;
             
             if ($request->image) {
                 $path = $uploadService->uploadImage($request->image, "avatars", $request->username);

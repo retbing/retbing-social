@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Services\Upload;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Tymon\JWTAuth\Exceptions\JWTException;
@@ -101,16 +102,22 @@ class AuthController extends Controller
     }
 
     /**
-     * Delete a user
+     * Delete a user and the avater uploaded with it 
      *
      * @return String Message
      */
-    public function deleteUser($id)
+    public function deleteUser($id, Upload $uploadService)
     {
         $user =  User::find($id);
         if ($user && auth('api')->user()->id == $user->id) {
+
+            $imagePath = $user->user_public_info->image->path;
+            $uploadService->deleteImage($imagePath);
+
+            $user->user_public_info->image->delete();
+
             $user->delete();
-            return response()->json(['message' => 'we really fell sad to see you go!']);
+            return response()->json(['message' => 'we really feel sad to see you go!']);
         } else {
             return response()->json(['error' => 'a user can only delete him/her self!']);
         }
