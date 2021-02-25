@@ -1,62 +1,177 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400"></a></p>
+<!-- Badges -->
 
-<p align="center">
-<a href="https://travis-ci.org/laravel/framework"><img src="https://travis-ci.org/laravel/framework.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
+[![Contributors][contributors-shield]][contributors-url]
+[![Repo size][repo-size-shield]][repo-url]
+[![MIT License][license-shield]][license-url]
+
+<!-- [![LinkedIn][linkedin-shield]][linkedin-url-1]
+[![LinkedIn][linkedin-shield]][linkedin-url-2] -->
+
+# Don't Forget
+
+<!-- Project Logo -->
+<p align=center>
+<img src="./assets/images/logo.png" width=256/>
+<h3 align=center>Retbing Social</h3>
+<p align=center>A simple social app created with Laravel and Vuejs<p/>
 </p>
 
-## About Laravel
+<!-- Description -->
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+<br>
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## About The Project
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+Retbing Social is a social web application that allows you to share posts, and interact with your friends. The application was developed with the idea of wondering how social media applications work and learning by trying it. Although it is far from being a real social media application for now, it contains the basic mechanics. It can be a good starting guide for curious people like us who don't know where to start!
 
-## Learning Laravel
+### Built With
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+-   [Laravel][laravel-url]
+-   [VueJs][vuejs-url]
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 1500 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+## Getting Started
 
-## Laravel Sponsors
+Retbing Social has been created with two powerful technologies, [Laravel][laravel-url] and [VueJs][vuejs-url]. The Laravel backend server of the application serves as a REST API and the frontend application connects it via http requests. Because backend part is totally seperate from the frontend part, you can use any other technology than VueJs to create the frontend. You can check all routes of the api [here](./routes/api.php).
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
+<!--
+<br>
+<p align=center><img src="./assets/images/app-usage.gif" width=250/></p> -->
 
-### Premium Partners
+### Prerequisites
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[Curotec](https://www.curotec.com/)**
-- **[OP.GG](https://op.gg)**
+You need to have following technologies on your machine before you run the project.
+
+-   [Composer](https://getcomposer.org/download/)
+
+-   [Laravel](https://laravel.com/docs/8.x#installation-via-composer)
+
+-   [Node](https://nodejs.org/en/)
+
+### Installation
+
+1. Clone the repo
+
+    ```sh
+    git clone https://github.com/retbing/retbing-social
+    ```
+
+2. Install required packages
+
+    ```sh
+    cd ./retbing-social/
+    composer install && npm install
+    ```
+
+3. Make your own .env file from .env.example
+
+    ```sh
+    cp ./.env.example ./.env
+    ```
+
+4. Generate your app key
+
+    ```sh
+    php artisan key:generate
+    ```
+
+5. Create your jwt secret
+
+    ```sh
+    php artisan vendor:publish --provider="Tymon\JWTAuth\Providers\LaravelServiceProvider"
+    ```
+
+    ```sh
+    php artisan jwt:secret
+    ```
+
+6. Create database file and migrate database tables
+
+    ```sh
+    touch ./database/database.sqlite & php artisan migrate
+    ```
+
+## Usage
+
+1. Run application
+
+    ```sh
+    php artisan serve
+    ```
+
+2. If you want to make changes on frontend you need to run following command
+
+    ```sh
+    npm run dev
+    ```
+
+    or
+
+    ```sh
+    npm run watch
+    ```
+
+## Roadmap
+
+See the [open issues][issues-url] for a list of proposed features (and known issues).
+
+<!-- CONTRIBUTING -->
 
 ## Contributing
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+Contributions are what make the open source community such an amazing place to be learn, inspire, and create. Any contributions you make are **greatly appreciated**.
 
-## Code of Conduct
+1. Fork the Project
+2. Create your Feature Branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your Changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push to the Branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
-
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+<!-- LICENSE -->
 
 ## License
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+Distributed under the MIT License. See `LICENSE` for more information.
+
+<!-- CONTACT -->
+
+## Contributors
+
+<table>
+<tr>
+<td>
+<a href='https://github.com/rtanyildizi' target="_blank">
+<div float="left" align="center">
+<img src="https://github.com/rtanyildizi.png" width=150px />
+
+<h4 > Nurettin Resul Tanyıldızı </h4>
+<p><a href='https://linkedin.com/in/rtanyildizi'>Linkedin</a> - <a href='mailto:tanyildizi.resul@gmail.com'>Gmail</a></p>
+</div></a>
+</td>
+<td>
+</td>
+<td>
+<a href='https://github.com/Benjamin274' target="_blank">
+<div float="left" align="center">
+<img src="https://media-exp1.licdn.com/dms/image/C4D03AQFQxvjnK7iDZA/profile-displayphoto-shrink_400_400/0/1598643535724?e=1619654400&v=beta&t=saz9CnZ6WhM9xhtJTRUk8xjsefUFdB3rSGR1qPod4NY" width=150px />
+
+<h4>  BINIYAM A. GEINORE  </h4>
+<p><a href='https://www.linkedin.com/in/biniyam-a-geinore-629975133/'>Linkedin</a> - <a href='mailto:biniabera274@gmail.com
+'>Gmail</a></p>
+</div></a>
+</td>
+</tr>
+</table>
+<!-- Variables -->
+
+[laravel-url]: https://laravel.com
+[vuejs-url]: https://vuejs.org/
+[repo-url]: https://github.com/retbing/retbing-social
+[issues-url]: https://github.com/retbing/retbing-social/issues
+[contributors-shield]: https://img.shields.io/github/contributors/retbing/retbing-social
+[contributors-url]: https://github.com/retbing/retbing-social/graphs/contributors
+[repo-size-shield]: https://img.shields.io/github/repo-size/retbing/retbing-social
+[license-shield]: https://img.shields.io/github/license/retbing/retbing-social
+[license-url]: https://github.com/retbing/retbing-social/blob/main/LICENSE
+[linkedin-shield]: https://img.shields.io/badge/LinkedIn-%230072B1?logo=linkedin
+[linkedin-url-1]: https://linkedin.com/in/rtanyildizi
+[linkedin-url-2]: https://linkedin.com/in/biniyam-a-geinore-629975133/

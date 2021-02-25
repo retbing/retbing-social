@@ -1,11 +1,8 @@
 <?php
 
 use App\Http\Controllers\AuthController;
-use App\Http\Controllers\ImageController;
 use App\Http\Controllers\UserPublicInfoController;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Models\Image;
 
 /*
 |--------------------------------------------------------------------------
@@ -33,8 +30,11 @@ Route::group(['middleware' => 'throttle',
     Route::post('me', [AuthController::class,'me']);
 });
 
-Route::group([
-'middleware' => 'api'
-], function () {
-    Route::post('users', [UserPublicInfoController::class, 'store'])->name('users.store');
+
+Route::prefix('users')->group(function () {
+    Route::post('/', [UserPublicInfoController::class, 'store'])->name('users.store');
+    Route::get('/', [UserPublicInfoController::class, 'index'])->name('users.index');
+    Route::get('/{user_id}', [UserPublicInfoController::class, 'show'])->name('users.show');
+    Route::get('/{user_id}/follow', [UserPublicInfoController::class, 'follow'])->name('users.follow');
+    Route::get('/{user_id}/unfollow', [UserPublicInfoController::class, 'unfollow'])->name('users.unfollow');
 });
