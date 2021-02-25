@@ -22,7 +22,7 @@ use App\Models\Image;
 //    return $request->user();
 //});
 
-Route::group([
+Route::group(['middleware' => 'throttle',
     'prefix' => 'auth'
 ], function ($router) {
     Route::post('register', [AuthController::class,'register']);
