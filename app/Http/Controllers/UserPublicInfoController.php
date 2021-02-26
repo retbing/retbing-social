@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Exceptions\Handler;
 use App\Models\User;
 use App\Models\Follow;
 use App\Models\UserPublicInfo;
 use App\Services\Upload;
+use AssertionError;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Database\QueryException;
@@ -26,6 +28,8 @@ class UserPublicInfoController extends Controller
 
         try {
             $user = User::find($request->user_id);
+            assert($user);
+            
             $user->user_public_info()->create(['username' => $request->username, 'name' => $request->name, 'bio' => $request->bio]);
 
             $path = Upload::DEFAULT_AVATAR_PATH;
@@ -37,11 +41,10 @@ class UserPublicInfoController extends Controller
             $user->user_public_info->image()->create(['path' => $path]);
             
             return $user;
+        } catch (AssertionError $e) {
+            return Handler::responseWithJson($e, "User not found with given user_id " . $request->user_id, null, 404);
         } catch (QueryException $e) {
-            return response()->json([
-                'error' => $e->getMessage(),
-                'code' => $e->getCode()
-              ], 500);
+            return Handler::responseWithJson($e);
         }
     }
 
@@ -75,15 +78,15 @@ class UserPublicInfoController extends Controller
                 return response()->json(['errors' => $validator->messages()]);
             }
             $user = UserPublicInfo::where('user_id', $id)->first();
+            assert($user);
             $follower_id = $request->follower_id;
             $user->follows()->create(['follower_id' => $follower_id]);
                 
             return $user->follows;
+        } catch (AssertionError $e) {
+            return Handler::responseWithJson($e, "User not found with given id " . $id, null, 404);
         } catch (QueryException $e) {
-            return response()->json([
-                    'error' => $e->getMessage(),
-                    'code' => $e->getCode()
-                  ], 500);
+            return Handler::responseWithJson($e);
         }
     }
 
@@ -98,17 +101,16 @@ class UserPublicInfoController extends Controller
                 return response()->json(['errors' => $validator->messages()]);
             }
             $user = UserPublicInfo::where('user_id', $id)->first();
-            
+            assert($user);
             $follower_id = $request->follower_id;
             
             Follow::where(['follower_id' => $follower_id, 'following_id' => $id])->first()->delete();
                 
             return $user->follows;
+        } catch (AssertionError $e) {
+            return Handler::responseWithJson($e, "User not found with given id " . $id, null, 404);
         } catch (QueryException $e) {
-            return response()->json([
-                    'error' => $e->getMessage(),
-                    'code' => $e->getCode()
-                  ], 500);
+            return Handler::responseWithJson($e);
         }
     }
 
