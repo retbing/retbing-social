@@ -37,4 +37,17 @@ class Handler extends ExceptionHandler
             //
         });
     }
+
+    /**
+     * Resolves the given error and responses with json
+     *
+     * @return ResponseFactory::json
+     */
+    public static function responseWithJson($e, $message = null, $code = null, $status = 500)
+    {
+        return response()->json([
+            'error' => $message  ? $message : $e->getMessage() ,
+            'code' => $code ? $code :  $e->getCode()
+          ], $status);
+    }
 }
