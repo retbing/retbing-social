@@ -22,13 +22,14 @@ use Illuminate\Support\Facades\Route;
 
 Route::prefix('auth')->group(
     function () {
-    Route::post('register', [AuthController::class,'register']);
-    Route::post('login', [AuthController::class,'login']);
-    Route::post('logout', [AuthController::class,'logout']);
-    Route::post('refresh', [AuthController::class,'refresh']);
-    Route::delete('{id}', [AuthController::class, 'deleteUser']);
-    Route::get('me', [AuthController::class, 'me']);
-});
+        Route::post('register', [AuthController::class,'register']);
+        Route::post('login', [AuthController::class,'login']);
+        Route::post('logout', [AuthController::class,'logout']);
+        Route::post('refresh', [AuthController::class,'refresh']);
+        Route::delete('{id}', [AuthController::class, 'deleteUser']);
+        Route::get('me', [AuthController::class, 'me']);
+    }
+);
 
 
 Route::prefix('users')->group(function () {
@@ -37,6 +38,7 @@ Route::prefix('users')->group(function () {
     Route::get('/{user_id}', [UserPublicInfoController::class, 'show'])->name('users.show');
     Route::post('/{user_id}/follow', [UserPublicInfoController::class, 'follow'])->name('users.follow');
     Route::delete('/{user_id}/unfollow', [UserPublicInfoController::class, 'unfollow'])->name('users.unfollow');
+    Route::get('/{user_id}/followers', [UserPublicInfoController::class, 'followers'])->name('users.followers');
 });
 
 Route::prefix('posts')->group(function () {

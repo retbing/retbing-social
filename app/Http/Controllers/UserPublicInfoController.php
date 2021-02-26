@@ -112,6 +112,11 @@ class UserPublicInfoController extends Controller
         }
     }
 
+    public function followers(int $user_id)
+    {
+        return Follow::with('follower_user')->with('follower_image')->where('following_id', $user_id)->get();
+    }
+
 
     /**
      * Validates incoming request and return errors if some is invalid
