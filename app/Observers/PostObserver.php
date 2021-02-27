@@ -3,7 +3,7 @@
 namespace App\Observers;
 
 use App\Models\Post;
-use App\Models\PostActivity;
+use App\Models\UserPublicInfo;
 
 class PostObserver
 {
@@ -16,6 +16,14 @@ class PostObserver
     public function created(Post $post)
     {
         $post->post_activity()->create([]);
+
+
+        /**
+         * Increse Posts count of the user who posts this post
+         */
+        $userActivity = UserPublicInfo::where('user_id', $post->user_id)->first()->activity;
+        $userActivity->increasePosts();
+        
     }
 
     /**
@@ -37,7 +45,8 @@ class PostObserver
      */
     public function deleted(Post $post)
     {
-        //
+        $userActivity = UserPublicInfo::where('user_id', $post->user_id)->first()->activity;
+        $userActivity->decresePosts();
     }
 
     /**
@@ -59,6 +68,7 @@ class PostObserver
      */
     public function forceDeleted(Post $post)
     {
-        //
+        $userActivity = UserPublicInfo::where('user_id', $post->user_id)->first()->activity;
+        $userActivity->decresePosts();
     }
 }

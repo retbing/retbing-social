@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Image;
+use App\Exceptions\Handler;
 use App\Models\Post;
 use App\Services\Upload;
+use AssertionError;
 use Exception;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
@@ -64,7 +65,6 @@ class PostController extends Controller
             }
             $post =  Post::create($data);
 
-            $path = Upload::DEFAULT_POST_IMAGE_PATH;
 
             if ($request->image) {
                 $path = $uploadService->uploadImage($request->image, "public/posts", $request->title);
@@ -73,15 +73,9 @@ class PostController extends Controller
             $post->image()->create(['path' => $path]);
             return response()->json($post);
         } catch (QueryException $e) {
-            return response()->json(['error' => [
-                'message' => $e->getMessage(),
-                'code' => $e->getCode()
-            ]]);
+            Handler::responseWithJson($e, Handler::QUERY_EXCEPTON);
         } catch (Exception $e) {
-            return response()->json(['error' => [
-                'message' => $e->getMessage(),
-                'code' => $e->getCode()
-            ]]);
+            Handler::responseWithJson($e, Handler::UNKNOWN_EXCEPTION);
         }
     }
 
@@ -91,9 +85,9 @@ class PostController extends Controller
      * @param  \App\Models\Post  $post
      * @return \Illuminate\Http\Response
      */
-    public function show(Post $post)
+    public function show($post_id)
     {
-        //
+        return Post::where('id', $post_id)->first()->detailedInfo();
     }
 
     /**
@@ -130,17 +124,19 @@ class PostController extends Controller
 
         try {
             $post = Post::find($id);
+            assert($post);
+            $post->delete();
+            $post->image->delete($post->image->id);
 
             $imagePath = $post->image->path;
             $uploadService->deleteImage($imagePath);
-            $post->delete();
-            $post->image->delete($post->image->id);
             return response()->json(['message' => 'you have successfully deleted ' . $imagePath]);
+        } catch (AssertionError $e) {
+            return Handler::responseWithJson($e, Handler::POST_NOT_FOUND);
+        } catch (QueryException $e) {
+            return Handler::responseWithJson($e, Handler::QUERY_EXCEPTON);
         } catch (Exception $e) {
-            return response()->json(['error' => [
-                'message' => $e->getMessage(),
-                'code' => $e->getCode()
-            ]]);
+            return Handler::responseWithJson($e);
         }
     }
 }
