@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\FollowController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\UserPublicInfoController;
 use Illuminate\Support\Facades\Route;
@@ -38,10 +39,10 @@ Route::prefix('users')->group(function () {
 
     Route::prefix('/{user_id}')->group(function () {
         Route::get('', [UserPublicInfoController::class, 'show'])->name('users.show');
-        Route::post('/follow', [UserPublicInfoController::class, 'follow'])->name('users.follow');
-        Route::delete('/unfollow', [UserPublicInfoController::class, 'unfollow'])->name('users.unfollow');
-        Route::get('/followers', [UserPublicInfoController::class, 'followers'])->name('users.followers');
-        Route::get('/followings', [UserPublicInfoController::class, 'followings'])->name('users.followings');
+        Route::post('/follow', [FollowController::class, 'store'])->name('follow.store');
+        Route::delete('/unfollow', [FollowController::class, 'destroy'])->name('follow.destroy');
+        Route::get('/followers', [FollowController::class, 'followers'])->name('follow.followers');
+        Route::get('/followings', [FollowController::class, 'followings'])->name('follow.followings');
     });
 });
 
