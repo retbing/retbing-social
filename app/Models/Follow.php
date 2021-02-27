@@ -24,6 +24,17 @@ class Follow extends Model
     }
 
 
+    public function following_user()
+    {
+        return $this->belongsTo(UserPublicInfo::class, 'following_id', 'id');
+    }
+
+    public function following_image()
+    {
+        return $this->hasOneThrough(Image::class, UserPublicInfo::class, 'id', 'imageable_id', 'following_id');
+    }
+
+
     public static function isFollowedByAuthenticatedUser($followedId)
     {
         $user = auth('api')->user();
