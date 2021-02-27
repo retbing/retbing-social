@@ -9,7 +9,6 @@ use App\Models\UserPublicInfo;
 use App\Services\Upload;
 use AssertionError;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Validator;
 use Illuminate\Database\QueryException;
 
 class UserPublicInfoController extends Controller
@@ -83,98 +82,9 @@ class UserPublicInfoController extends Controller
         });
     }
 
-    public function follow(Request $request, int $id)
-    {
-        try {
-            $validator = Validator::make($request->all(), [
-                'follower_id' => 'required|integer|min:1',
-                ]);
+   
 
-            if ($validator->fails()) {
-                return response()->json(['errors' => $validator->messages()]);
-            }
-            $user = UserPublicInfo::where('user_id', $id)->first();
-            assert($user);
-            $follower_id = $request->follower_id;
-            $user->follows()->create(['follower_id' => $follower_id]);
-                
-            return $user->follows;
-        } catch (AssertionError $e) {
-            return Handler::responseWithJson($e, "User not found with given id " . $id, null, 404);
-        } catch (QueryException $e) {
-            return Handler::responseWithJson($e);
-        }
-    }
-
-    public function unfollow(Request $request, int $id)
-    {
-        try {
-            $validator = Validator::make($request->all(), [
-                'follower_id' => 'required|integer|min:1',
-                ]);
-
-            if ($validator->fails()) {
-                return response()->json(['errors' => $validator->messages()]);
-            }
-            $user = UserPublicInfo::where('user_id', $id)->first();
-            assert($user);
-            $follower_id = $request->follower_id;
-            
-            Follow::where(['follower_id' => $follower_id, 'following_id' => $id])->first()->delete();
-                
-            return $user->follows;
-        } catch (AssertionError $e) {
-            return Handler::responseWithJson($e, Handler::USER_NOT_FOUND, 404);
-        } catch (QueryException $e) {
-            return Handler::responseWithJson($e, Handler::QUERY_EXCEPTON);
-        }
-    }
-
-    /**
-     * Returns all followers of a user
-     * @return Collection
-     */
-    public function followers(int $user_id)
-    {
-        try {
-            $user = User::find($user_id);
-            assert($user);
-            
-            return Follow::with('follower_user')
-            ->with('follower_image')
-            ->where('following_id', $user_id)
-            ->get()
-            ->map(function (Follow $follow) {
-                return $follow->follower_user->smallDetails();
-            });
-        } catch (AssertionError $e) {
-            return Handler::responseWithJson($e, Handler::USER_NOT_FOUND, 404);
-        }
-    }
-
-    /**
-     * Returns all followings of a user
-     * @return Collection
-     */
-    public function followings(int $user_id)
-    {
-        try {
-            $user = User::find($user_id);
-            assert($user);
-        
-            return Follow::with('follower_user')
-            ->with('following_image')
-            ->where('follower_id', $user_id)
-            ->get()
-            ->map(function (Follow $follow) {
-                return $follow->following_user->smallDetails();
-            });
-        } catch (AssertionError $e) {
-            return Handler::responseWithJson($e, Handler::USER_NOT_FOUND, 404);
-        }
-    }
-
-
+  
     /**
      * Validates incoming request and return errors if some is invalid
      */
