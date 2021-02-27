@@ -15,7 +15,27 @@ class Post extends Model
     {
         return [
             'id' => $this->id,
-            'user_id' => $this->user_id,
+            'user' => [
+                'id' => $this->user->id,
+                'name' => $this->user->user_public_info->username,
+                'image' => $this->user->image,
+            ],
+            'title' => $this->title,
+            'content' => $this->content,
+            'created_at' => $this->created_at,
+            'is_followed_by_auth_user' => false,
+            'image' => [
+                'id' => $this->image->id,
+                'path' => $this->image->path,
+                'nsfw_ratio' => $this->image->nsfw_ratio
+            ],
+        ];
+    }
+    public function detailedInfo()
+    {
+        return [
+            'id' => $this->id,
+            'user' => $this->user->user_public_info(),
             'title' => $this->title,
             'content' => $this->content,
             'created_at' => $this->created_at,
