@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\LikeController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\UserPublicInfoController;
 use Illuminate\Support\Facades\Route;
@@ -51,8 +52,8 @@ Route::prefix('posts')->group(function () {
     Route::prefix('/{post_id}')->group(function () {
         Route::get('/', [PostController::class, 'show']);
         Route::delete('/', [PostController::class, 'destroy']);
-        Route::post('/like', [PostController::class, 'like']);
-        Route::delete('/dislike', [PostController::class, 'dislike']);
+        Route::post('/like', [LikeController::class, 'like']);
+        Route::delete('/dislike', [LikeController::class, 'dislike']);
     });
     
     
