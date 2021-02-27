@@ -2,11 +2,19 @@
 
 namespace App\Exceptions;
 
+use Error;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Exception;
 use Throwable;
 
 class Handler extends ExceptionHandler
 {
+    public const UNKNOWN_EXCEPTION = 'unknown-exception';
+    public const USER_NOT_FOUND = 'user-not-found';
+    public const EMAIL_EXISTS = 'email-exists';
+    public const TOKEN_NOT_FOUND = 'token-not-found';
+    public const INVALID_CREDENTIALS = 'invalid-credentials';
+    public const QUERY_EXCEPTON = 'query-exception';
     /**
      * A list of the exception types that are not reported.
      *
@@ -43,11 +51,14 @@ class Handler extends ExceptionHandler
      *
      * @return ResponseFactory::json
      */
-    public static function responseWithJson($e, $message = null, $code = null, $status = 500)
+    public static function responseWithJson(Exception|Error $e, string $id = self::UNKNOWN_EXCEPTION, int $status = 500)
     {
         return response()->json([
-            'error' => $message  ? $message : $e->getMessage() ,
-            'code' => $code ? $code :  $e->getCode()
+            'error'=> [
+                'id' => $id,
+                'message' => $e->getMessage(),
+                'code' => $e->getCode(),
+            ],
           ], $status);
     }
 }
