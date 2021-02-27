@@ -22,6 +22,12 @@ class UserPublicInfoController extends Controller
         }
     }
 
+
+    /**
+     * Inserts a new UserPublicInfo and returns the inserted user
+     *
+     * @return User
+     */
     public function store(Request $request, Upload $uploadService)
     {
         $this->_validateRequest($request);
@@ -48,6 +54,11 @@ class UserPublicInfoController extends Controller
         }
     }
 
+    /**
+     * Returns all UserPublicInfos
+     *
+     * @return Collection
+     */
     public function index()
     {
         return UserPublicInfo::with('image')
@@ -57,6 +68,11 @@ class UserPublicInfoController extends Controller
         });
     }
 
+    /**
+     * Returns the UserPublicInfo of the given user_id
+     *
+     * @return UserPublicInfo
+     */
     public function show(int $id)
     {
         return UserPublicInfo::where('user_id', $id)
@@ -111,6 +127,50 @@ class UserPublicInfoController extends Controller
             return Handler::responseWithJson($e, "User not found with given id " . $id, null, 404);
         } catch (QueryException $e) {
             return Handler::responseWithJson($e);
+        }
+    }
+
+    /**
+     * Returns all followers of a user
+     * @return Collection
+     */
+    public function followers(int $user_id)
+    {
+        try {
+            $user = User::find($user_id);
+            assert($user);
+            
+            return Follow::with('follower_user')
+            ->with('follower_image')
+            ->where('following_id', $user_id)
+            ->get()
+            ->map(function (Follow $follow) {
+                return $follow->follower_user->smallDetails();
+            });
+        } catch (AssertionError $e) {
+            return Handler::responseWithJson($e, "User not found with given id " . $user_id, null, 404);
+        }
+    }
+
+    /**
+     * Returns all followings of a user
+     * @return Collection
+     */
+    public function followings(int $user_id)
+    {
+        try {
+            $user = User::find($user_id);
+            assert($user);
+        
+            return Follow::with('follower_user')
+            ->with('following_image')
+            ->where('follower_id', $user_id)
+            ->get()
+            ->map(function (Follow $follow) {
+                return $follow->following_user->smallDetails();
+            });
+        } catch (AssertionError $e) {
+            return Handler::responseWithJson($e, "User not found with given id " . $user_id, null, 404);
         }
     }
 

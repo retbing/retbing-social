@@ -13,6 +13,27 @@ class Follow extends Model
         'follower_id'
     ];
 
+    public function follower_user()
+    {
+        return $this->belongsTo(UserPublicInfo::class, 'follower_id', 'id');
+    }
+
+    public function follower_image()
+    {
+        return $this->hasOneThrough(Image::class, UserPublicInfo::class, 'id', 'imageable_id', 'follower_id');
+    }
+
+
+    public function following_user()
+    {
+        return $this->belongsTo(UserPublicInfo::class, 'following_id', 'id');
+    }
+
+    public function following_image()
+    {
+        return $this->hasOneThrough(Image::class, UserPublicInfo::class, 'id', 'imageable_id', 'following_id');
+    }
+
 
     public static function isFollowedByAuthenticatedUser($followedId)
     {
