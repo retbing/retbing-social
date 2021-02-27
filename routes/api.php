@@ -54,7 +54,7 @@ Route::prefix('posts')->group(function () {
         Route::get('/', [PostController::class, 'show']);
         Route::delete('/', [PostController::class, 'destroy']);
         Route::post('/like', [LikeController::class, 'like']);
-        Route::delete('/dislike', [LikeController::class, 'dislike']);
+        Route::post('/dislike', [LikeController::class, 'dislike']);
     });
     
     

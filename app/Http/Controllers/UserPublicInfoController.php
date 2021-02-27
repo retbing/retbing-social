@@ -10,6 +10,7 @@ use App\Services\Upload;
 use AssertionError;
 use Illuminate\Http\Request;
 use Illuminate\Database\QueryException;
+use Illuminate\Support\Facades\Validator;
 
 class UserPublicInfoController extends Controller
 {

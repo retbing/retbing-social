@@ -17,7 +17,9 @@ class CreateLikesTable extends Migration
             $table->id();
             $table->unsignedBigInteger('likeable_id');
             $table->string('likeable_type');
+            $table->unsignedBigInteger('liked_by');
             $table->timestamps();
+            $table->foreign('liked_by')->references('id')->on('users')->onDelete('cascade');
         });
     }
 

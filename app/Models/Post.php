@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Http\Controllers\LikeController;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -18,7 +19,7 @@ class Post extends Model
             'title' => $this->title,
             'content' => $this->content,
             'created_at' => $this->created_at,
-            'is_liked_by_auth_user' => false,
+            'is_liked_by_auth_user' => LikeController::isLikedByAuth($this->id),
             'image' =>  [
                 'path' => $this->image->path
             ],
@@ -44,7 +45,7 @@ class Post extends Model
             'content' => $this->content,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
-            'is_liked_by_auth_user' => false,
+            'is_liked_by_auth_user' => LikeController::isLikedByAuth($this->id),
             'image' => [
                 'path' => $this->user->user_public_info->image->path
             ],
