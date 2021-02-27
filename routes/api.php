@@ -47,6 +47,7 @@ Route::prefix('users')->group(function () {
 
 Route::prefix('posts')->group(function () {
     Route::get('/', [PostController::class, 'index']);
+    Route::get('/{id}', [PostController::class, 'show']);
     Route::post('/', [PostController::class, 'store']);
     Route::delete('/{id}', [PostController::class, 'destroy']);
 });

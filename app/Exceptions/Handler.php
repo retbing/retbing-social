@@ -11,6 +11,7 @@ class Handler extends ExceptionHandler
 {
     public const UNKNOWN_EXCEPTION = 'unknown-exception';
     public const USER_NOT_FOUND = 'user-not-found';
+    public const POST_NOT_FOUND = 'post-not-found';
     public const EMAIL_EXISTS = 'email-exists';
     public const TOKEN_NOT_FOUND = 'token-not-found';
     public const INVALID_CREDENTIALS = 'invalid-credentials';

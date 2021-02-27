@@ -45,6 +45,21 @@ class UserActivity extends Model
         $this->save();
     }
 
+    public function increasePosts()
+    {
+        $posts_count = $this->posts_count + 1;
+        $this->posts_count = $posts_count;
+        $this->save();
+    }
+
+
+    public function decresePosts()
+    {
+        $posts_count = $this->posts_count - 1;
+        $this->posts_count = $posts_count;
+        $this->save();
+    }
+
 
     /**
      * Relations

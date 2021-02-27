@@ -15,16 +15,43 @@ class Post extends Model
     {
         return [
             'id' => $this->id,
-            'user_id' => $this->user_id,
             'title' => $this->title,
             'content' => $this->content,
             'created_at' => $this->created_at,
-            'is_followed_by_auth_user' => false,
-            'image' => [
-                'id' => $this->image->id,
-                'path' => $this->image->path,
-                'nsfw_ratio' => $this->image->nsfw_ratio
+            'is_liked_by_auth_user' => false,
+            'image' =>  [
+                'path' => $this->image->path
             ],
+            'user' => [
+                'id' => $this->user->user_public_info->id,
+                'name' => $this->user->user_public_info->name,
+                'image' => [
+                    'path' => $this->user->user_public_info->image->path
+                ]
+            ],
+
+        ];
+    }
+    public function detailedInfo()
+    {
+        return [
+            'id' => $this->id,
+            'title' => $this->title,
+            'content' => $this->content,
+            'created_at' => $this->created_at,
+            'updated_at' => $this->updated_at,
+            'is_liked_by_auth_user' => false,
+            'image' => [
+                'path' => $this->user->user_public_info->image->path
+            ],
+            'user' => [
+                'id' => $this->user->id,
+                'name' => $this->user->user_public_info->name,
+                'username' => $this->user->user_public_info->username,
+                'image' => [
+                    'path' => $this->user->user_public_info->image->path
+                ]
+            ]
         ];
     }
 
@@ -45,4 +72,5 @@ class Post extends Model
     {
         return $this->belongsTo(User::class);
     }
+    
 }
