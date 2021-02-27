@@ -15,9 +15,9 @@ class CreatePostActivitiesTable extends Migration
     {
         Schema::create('post_activities', function (Blueprint $table) {
             $table->id();
-            $table->bigInteger('post_id')->unique();
-            $table->integer('like_count')->default(0);
-            $table->integer('comment_count')->default(0);
+            $table->unsignedBigInteger('post_id')->unique();
+            $table->integer('likes_count')->default(0);
+            $table->integer('comments_count')->default(0);
             $table->timestamps();
             $table->foreign('post_id')->references('id')->on('posts')->onDelete('cascade');
         });

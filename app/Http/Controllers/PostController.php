@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Exceptions\Handler;
 use App\Models\Post;
+use App\Models\PostActivity;
+use App\Models\User;
 use App\Services\Upload;
 use AssertionError;
 use Exception;
@@ -34,13 +36,38 @@ class PostController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
+     * Like a post.
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function like($post_id)
     {
-        //
+
+        try {
+            $post_activity  = PostActivity::where('post_id', $post_id)->first();
+            assert($post_activity);
+            $post_activity->increaseLikes();
+            return $post_activity;
+        } catch (AssertionError $e) {
+            return Handler::responseWithJson($e, Handler::POST_NOT_FOUND);
+        } catch (Exception $e) {
+            return Handler::responseWithJson($e);
+        }
+    }
+    public function dislike($post_id)
+    {
+
+        try {
+            $post_activity  = PostActivity::where('post_id', $post_id)->first();
+            assert($post_activity);
+            $post_activity->decreaseLikes();
+
+            return $post_activity;
+        } catch (AssertionError $e) {
+            return Handler::responseWithJson($e, Handler::POST_NOT_FOUND);
+        } catch (Exception $e) {
+            return Handler::responseWithJson($e);
+        }
     }
 
     /**
@@ -60,11 +87,11 @@ class PostController extends Controller
                 'content' => 'required|string|min:1',
                 'title' => 'required|string|min:1|max:255',
             ]);
+            assert(User::find($request->user_id));
             if ($validator->fails()) {
                 return response()->json(['errors' => $validator->messages()], 400);
             }
             $post =  Post::create($data);
-
 
             if ($request->image) {
                 $path = $uploadService->uploadImage($request->image, "public/posts", $request->title);
@@ -72,6 +99,8 @@ class PostController extends Controller
 
             $post->image()->create(['path' => $path]);
             return response()->json($post);
+        } catch (AssertionError $e) {
+            Handler::responseWithJson($e, Handler::USER_NOT_FOUND);
         } catch (QueryException $e) {
             Handler::responseWithJson($e, Handler::QUERY_EXCEPTON);
         } catch (Exception $e) {
@@ -87,7 +116,15 @@ class PostController extends Controller
      */
     public function show($post_id)
     {
-        return Post::where('id', $post_id)->first()->detailedInfo();
+        try {
+            $post = Post::where('id', $post_id)->first();
+            assert($post);
+            return $post->detailedInfo();
+        } catch (AssertionError $e) {
+            return Handler::responseWithJson($e, Handler::POST_NOT_FOUND);
+        } catch (Exception $e) {
+            return Handler::responseWithJson($e);
+        }
     }
 
     /**
