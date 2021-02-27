@@ -66,7 +66,7 @@ class FollowController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create(Request $request, int $id)
+    public function store(Request $request, int $id)
     {
         try {
             $validator = Validator::make($request->all(), [

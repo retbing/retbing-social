@@ -39,7 +39,7 @@ Route::prefix('users')->group(function () {
 
     Route::prefix('/{user_id}')->group(function () {
         Route::get('', [UserPublicInfoController::class, 'show'])->name('users.show');
-        Route::post('/follow', [FollowController::class, 'create'])->name('follow.create');
+        Route::post('/follow', [FollowController::class, 'store'])->name('follow.store');
         Route::delete('/unfollow', [FollowController::class, 'destroy'])->name('follow.destroy');
         Route::get('/followers', [FollowController::class, 'followers'])->name('follow.followers');
         Route::get('/followings', [FollowController::class, 'followings'])->name('follow.followings');
