@@ -55,7 +55,7 @@ class UserActivity extends Model
 
     public function decresePosts()
     {
-        $posts_count = $this->posts_count - 1;
+        $posts_count =  $this->posts_count > 0 ? $this->posts_count - 1 : 0;
         $this->posts_count = $posts_count;
         $this->save();
     }

@@ -29,6 +29,10 @@ class Post extends Model
                     'path' => $this->user->user_public_info->image->path
                 ]
             ],
+            'activity' => [
+                'likes_count' => $this->post_activity->likes_count,
+                'comments_count' => $this->post_activity->comments_count
+            ]
 
         ];
     }
@@ -51,6 +55,10 @@ class Post extends Model
                 'image' => [
                     'path' => $this->user->user_public_info->image->path
                 ]
+            ],
+            'activity' => [
+                'likes_count' => $this->post_activity->likes_count,
+                'comments_count' => $this->post_activity->comments_count
             ]
         ];
     }
@@ -72,5 +80,11 @@ class Post extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+    public function likes()
+    {
+        return $this->morphMany(Like::class, 'likeable');
+    }
+    
     
 }

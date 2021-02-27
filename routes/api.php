@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\LikeController;
 use App\Http\Controllers\FollowController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\UserPublicInfoController;
@@ -48,7 +49,13 @@ Route::prefix('users')->group(function () {
 
 Route::prefix('posts')->group(function () {
     Route::get('/', [PostController::class, 'index']);
-    Route::get('/{id}', [PostController::class, 'show']);
     Route::post('/', [PostController::class, 'store']);
-    Route::delete('/{id}', [PostController::class, 'destroy']);
+    Route::prefix('/{post_id}')->group(function () {
+        Route::get('/', [PostController::class, 'show']);
+        Route::delete('/', [PostController::class, 'destroy']);
+        Route::post('/like', [LikeController::class, 'like']);
+        Route::delete('/dislike', [LikeController::class, 'dislike']);
+    });
+    
+    
 });
