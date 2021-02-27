@@ -48,9 +48,9 @@ class UserPublicInfoController extends Controller
             
             return $user;
         } catch (AssertionError $e) {
-            return Handler::responseWithJson($e, "User not found with given user_id " . $request->user_id, null, 404);
+            return Handler::responseWithJson($e, Handler::USER_NOT_FOUND, 404);
         } catch (QueryException $e) {
-            return Handler::responseWithJson($e);
+            return Handler::responseWithJson($e, Handler::QUERY_EXCEPTON);
         }
     }
 
@@ -124,9 +124,9 @@ class UserPublicInfoController extends Controller
                 
             return $user->follows;
         } catch (AssertionError $e) {
-            return Handler::responseWithJson($e, "User not found with given id " . $id, null, 404);
+            return Handler::responseWithJson($e, Handler::USER_NOT_FOUND, 404);
         } catch (QueryException $e) {
-            return Handler::responseWithJson($e);
+            return Handler::responseWithJson($e, Handler::QUERY_EXCEPTON);
         }
     }
 
@@ -148,7 +148,7 @@ class UserPublicInfoController extends Controller
                 return $follow->follower_user->smallDetails();
             });
         } catch (AssertionError $e) {
-            return Handler::responseWithJson($e, "User not found with given id " . $user_id, null, 404);
+            return Handler::responseWithJson($e, Handler::USER_NOT_FOUND, 404);
         }
     }
 
@@ -170,7 +170,7 @@ class UserPublicInfoController extends Controller
                 return $follow->following_user->smallDetails();
             });
         } catch (AssertionError $e) {
-            return Handler::responseWithJson($e, "User not found with given id " . $user_id, null, 404);
+            return Handler::responseWithJson($e, Handler::USER_NOT_FOUND, 404);
         }
     }
 
